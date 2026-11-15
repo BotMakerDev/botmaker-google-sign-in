@@ -1,0 +1,47 @@
+package com.botmaker.googlesignin.plugins.com_github_botmakerdev.botmaker_sdk;
+
+import com.botmaker.sdk.api.bot.SdkValue;
+import com.botmaker.sdk.api.screens.Element;
+
+/**
+ * What the bot finds on Google's pages, by what every emulator's tree shows: the field Android states, and words.
+ * Google's HTML ids reach the tree on some emulators only (MuMu 15, not LDPlayer 14), so none is a clue here.
+ */
+@SdkValue(SdkValue.Id.ELEMENTS)
+public final class Elements {
+
+    /** The page's text field: the address's, or a code's. */
+    public static final Element FIELD = Element.textField();
+    public static final Element PASSWORD = Element.passwordField();
+    public static final Element FORGOT_EMAIL = Element.byText(Texts.FORGOT_EMAIL);
+    public static final Element COULDNT_FIND = Element.byContaining(Texts.COULDNT_FIND);
+    public static final Element VALID_EMAIL = Element.byContaining(Texts.VALID_EMAIL);
+    public static final Element WRONG_PASSWORD = Element.byContaining(Texts.WRONG_PASSWORD);
+    public static final Element ITS_YOU = Element.byContaining(Texts.ITS_YOU);
+    public static final Element NEXT = Element.byText(Texts.NEXT);
+    public static final Element VERIFY = Element.byText(Texts.VERIFY);
+    public static final Element CODE = Element.byContaining(Texts.CODE);
+    public static final Element BACKUP_CODES = Element.byContaining(Texts.BACKUP_CODES);
+    public static final Element CHECK_YOUR_PHONE = Element.byContaining(Texts.CHECK_YOUR_PHONE);
+    public static final Element CHOOSE_HOW = Element.byContaining(Texts.CHOOSE_HOW);
+    public static final Element ANOTHER_WAY_LIST = Element.byContaining(Texts.ANOTHER_WAY_LIST);
+    public static final Element PASSKEY = Element.byContaining(Texts.PASSKEY);
+    public static final Element TRY_ANOTHER_WAY = Element.byText(Texts.TRY_ANOTHER_WAY);
+    public static final Element CAPTCHA = Element.byContaining(Texts.CAPTCHA);
+    public static final Element REFUSED = Element.byContaining(Texts.REFUSED);
+    public static final Element I_AGREE = Element.byText(Texts.I_AGREE);
+    public static final Element GOOGLE_SERVICES = Element.byContaining(Texts.GOOGLE_SERVICES);
+    public static final Element MORE = Element.byText(Texts.MORE);
+    public static final Element ACCEPT = Element.byText(Texts.ACCEPT);
+    public static final Element PHONE_NUMBER = Element.byContaining(Texts.PHONE_NUMBER);
+    public static final Element SKIP = Element.byText(Texts.SKIP);
+    public static final Element NOT_NOW = Element.byText(Texts.NOT_NOW);
+    /** A row of the list of ways, each the tappable row around its words. */
+    public static final Element PHONE_ROW = Element.byContaining(Texts.TAP_YES);
+    public static final Element AUTHENTICATOR_ROW = Element.byContaining(Texts.AUTHENTICATOR);
+    /** The first code's row: a texted code's, or the authenticator's when no other is offered. */
+    public static final Element CODE_ROW = Element.byContaining(Texts.VERIFICATION_CODE).index(0);
+    public static final Element BACKUP_ROW = Element.byContaining(Texts.BACKUP_CODE);
+
+    private Elements() {}
+}
