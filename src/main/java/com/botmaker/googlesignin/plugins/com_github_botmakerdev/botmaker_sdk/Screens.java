@@ -150,9 +150,13 @@ public final class Screens {
         }
     }
 
-    /** The list of ways Try another way opens, under its usual heading. */
+    /**
+     * The list of ways, under its usual heading: the one Try another way opens, or the one Google shows right after
+     * the email when the account also has a passkey, whose password row is then the way.
+     */
     public static final class Ways extends Screen {
         public final Mark heading = Mark.of(Elements.CHOOSE_HOW);
+        public final Button password = Button.of(Elements.PASSWORD_ROW).occasional();
         public final Button phone = Button.of(Elements.PHONE_ROW).occasional();
         public final Button authenticator = Button.of(Elements.AUTHENTICATOR_ROW).occasional();
         public final Button code = Button.of(Elements.CODE_ROW).occasional();
@@ -184,6 +188,7 @@ public final class Screens {
 
     public static final class Passkey extends Screen {
         public final Mark passkey = Mark.of(Elements.PASSKEY);
+        public final Mark noWays = Mark.of(Elements.CHOOSE_HOW).absent();
         public final Button anotherWay = Button.of(Elements.TRY_ANOTHER_WAY).occasional();
         public final Custom away = Custom.of(GoogleSignIn::passkey);
         public final Do signIn = Do.press(away).serves(Goals.SIGNED_IN);
@@ -194,10 +199,23 @@ public final class Screens {
         }
     }
 
+    /** Android's sheet offering a screen lock for passkeys, over the sign-in: closed by a tap above it, never set up. */
+    public static final class PasskeyScreenLock extends Screen {
+        public final Mark words = Mark.of(Elements.PASSKEY_SCREEN_LOCK);
+        public final Button close = Button.of(Elements.ABOVE_SHEET).occasional();
+        public final Do signIn = Do.press(close).serves(Goals.SIGNED_IN);
+
+        @Override
+        public Setup setup() {
+            return Setup.named("Screen lock for passkeys");
+        }
+    }
+
     /** A second step the bot doesn't read, under any heading, offering another way. */
     public static final class TwoStep extends Screen {
         public final Button anotherWay = Button.of(Elements.TRY_ANOTHER_WAY).marking();
         public final Mark noPasskey = Mark.of(Elements.PASSKEY).absent();
+        public final Mark noWays = Mark.of(Elements.CHOOSE_HOW).absent();
         public final Mark noPhone = Mark.of(Elements.CHECK_YOUR_PHONE).absent();
         public final Mark noField = Mark.of(Elements.FIELD).absent();
         public final Mark noPassword = Mark.of(Elements.PASSWORD).absent();
@@ -282,6 +300,7 @@ public final class Screens {
     public static final Ways WAYS = new Ways();
     public static final OtherWays OTHER_WAYS = new OtherWays();
     public static final Passkey PASSKEY = new Passkey();
+    public static final PasskeyScreenLock PASSKEY_SCREEN_LOCK = new PasskeyScreenLock();
     public static final TwoStep TWO_STEP = new TwoStep();
     public static final Captcha CAPTCHA = new Captcha();
     public static final Refused REFUSED = new Refused();

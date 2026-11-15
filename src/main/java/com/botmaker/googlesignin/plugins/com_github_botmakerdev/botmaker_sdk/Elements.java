@@ -27,6 +27,11 @@ public final class Elements {
     public static final Element ANOTHER_WAY_LIST = Element.byContaining(Texts.ANOTHER_WAY_LIST);
     public static final Element PASSKEY = Element.byContaining(Texts.PASSKEY);
     public static final Element TRY_ANOTHER_WAY = Element.byText(Texts.TRY_ANOTHER_WAY);
+    /** The list of ways' row for the password, offered first when the account also has a passkey. */
+    public static final Element PASSWORD_ROW = Element.byText(Texts.ENTER_PASSWORD);
+    public static final Element PASSKEY_SCREEN_LOCK = Element.byContaining(Texts.PASSKEY_SCREEN_LOCK);
+    /** The screen above a bottom sheet: a tap there closes the sheet. */
+    public static final Element ABOVE_SHEET = Element.byId("touch_outside");
     public static final Element CAPTCHA = Element.byContaining(Texts.CAPTCHA);
     public static final Element REFUSED = Element.byContaining(Texts.REFUSED);
     public static final Element I_AGREE = Element.byText(Texts.I_AGREE);

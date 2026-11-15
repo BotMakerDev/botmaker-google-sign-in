@@ -73,9 +73,15 @@ public final class GoogleSignIn extends Bot {
         }
     }
 
+    /**
+     * The password, when the list offers it and no second step (the list Google shows before the password, to an
+     * account with a passkey); else the account's second step, so a list past the password never goes back to it.
+     */
     public static void pickWay() {
         Screens.Ways list = Screens.WAYS;
-        pick(list.phone, list.authenticator, list.code, list.backup);
+        boolean secondStep = shown(list.phone) || shown(list.authenticator) || shown(list.code) || shown(list.backup);
+        if (!secondStep && shown(list.password)) Navigate.press(list.password);
+        else pick(list.phone, list.authenticator, list.code, list.backup);
     }
 
     public static void pickOtherWay() {

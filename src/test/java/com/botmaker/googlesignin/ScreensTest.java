@@ -122,6 +122,19 @@ class ScreensTest {
         assertEquals(List.of(), on(tree(words("Welcome", 1), words("More ways to verify", 5))));
     }
 
+    /** An account with a passkey: Google offers the screen-lock sheet, then the list of ways before the password. */
+    @Test
+    void readsThePasskeyPagesBeforeThePassword() {
+        assertEquals(List.of("WAYS"), on(tree(words("Welcome", 1), words("Choose how you want to sign in:", 2),
+                box("Use your passkey", 3), box("Enter your password", 4), words("Try another way", 6))));
+        String sheet = "<hierarchy rotation=\"0\"><node resource-id=\"com.google.android.gms:id/touch_outside\""
+                + " text=\"\" class=\"android.view.View\" package=\"com.google.android.gms\" clickable=\"true\""
+                + " bounds=\"[0,0][1600,900]\"/>" + "<node resource-id=\"\" text=\"\" class=\"android.widget.FrameLayout\""
+                + " package=\"com.google.android.gms\" bounds=\"[300,500][1300,900]\">"
+                + words("Set up screen lock to use passkeys", 6) + words("Use a different device", 8) + "</node></hierarchy>";
+        assertEquals(List.of("PASSKEY_SCREEN_LOCK"), on(sheet));
+    }
+
     @Test
     void readsTheCodePages() {
         assertEquals(List.of("CODE"), on(tree(words("2-Step Verification", 1), field(3), words("Enter the code", 4),

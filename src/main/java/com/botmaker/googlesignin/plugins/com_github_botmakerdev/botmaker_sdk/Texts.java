@@ -24,6 +24,8 @@ public final class Texts {
     public static final Words ANOTHER_WAY_LIST = Words.of("verify it's you another way");
     public static final Words PASSKEY = Words.of("use your passkey to");
     public static final Words TRY_ANOTHER_WAY = Words.of("Try another way");
+    public static final Words ENTER_PASSWORD = Words.of("Enter your password");
+    public static final Words PASSKEY_SCREEN_LOCK = Words.of("set up screen lock to use passkeys");
     public static final Words CAPTCHA = Words.of("type the text you hear or see");
     public static final Words REFUSED = Words.of("couldn't sign you in");
     public static final Words I_AGREE = Words.of("I agree");
