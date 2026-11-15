@@ -7,6 +7,7 @@ import com.botmaker.sdk.api.bot.Bot;
 import com.botmaker.sdk.api.screens.Button;
 import com.botmaker.sdk.api.screens.Navigate;
 import com.botmaker.sdk.api.signin.NeedsYou;
+import com.botmaker.sdk.api.signin.Refusal;
 import com.botmaker.sdk.api.signin.SecondStep;
 import com.botmaker.sdk.api.signin.SignIn;
 import com.botmaker.sdk.api.signin.Typed;
@@ -107,15 +108,21 @@ public final class GoogleSignIn extends Bot {
     }
 
     public static void noSuchAccount() {
-        Bot.stop("Google has no such account: check the address in BotMaker's Accounts window.");
+        stop(Refusal.NO_SUCH_ACCOUNT);
     }
 
     public static void wrongPassword() {
-        Bot.stop("Google refused the password: change it in BotMaker's Accounts window.");
+        stop(Refusal.WRONG_PASSWORD);
     }
 
     public static void refused() {
-        Bot.stop("Google refused the sign-in on this device. Try again later, or sign in by hand.");
+        stop(Refusal.REFUSED);
+    }
+
+    /** Tells the host why Google refused, so it deals with the account as that asks, then stops. */
+    private static void stop(Refusal why) {
+        SignIn.refused(why);
+        Bot.stop(why.displayName());
     }
 
     /** The run's home: on a page the map doesn't know, the user looks; on a known one, nothing. */
