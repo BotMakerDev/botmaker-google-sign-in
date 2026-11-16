@@ -18,4 +18,10 @@ public final class Migrations {
     static Object CAPTCHA() {
         return null;
     }
+
+    @Refactor("write the replacement")
+    @Migrate(name = "com.botmaker.sdk.api.signin.SecondStep", kind = Migrate.Kind.FIELD)
+    static Object BACKUP_CODE() {
+        return null;
+    }
 }
