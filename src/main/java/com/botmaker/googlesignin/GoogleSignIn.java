@@ -80,8 +80,11 @@ public final class GoogleSignIn extends Bot {
     public static void pickWay() {
         Screens.Ways list = Screens.WAYS;
         boolean secondStep = shown(list.phone) || shown(list.authenticator) || shown(list.code) || shown(list.backup);
-        if (!secondStep && shown(list.password)) Navigate.press(list.password);
-        else pick(list.phone, list.authenticator, list.code, list.backup);
+        if (!secondStep && shown(list.password)) {
+            Navigate.press(list.password);
+        } else {
+            pick(list.phone, list.authenticator, list.code, list.backup);
+        }
     }
 
     public static void pickOtherWay() {
@@ -133,25 +136,33 @@ public final class GoogleSignIn extends Bot {
 
     /** The run's home: on a page the map doesn't know, the user looks; on a known one, nothing. */
     public static void lost() {
-        if (Navigate.where().isEmpty()) look();
+        if (Navigate.where().isEmpty()) {
+            look();
+        }
     }
 
     /** The row of the account's method, else the user. */
     private static void pick(Button phone, Button authenticator, Button code, Button backup) {
         Button row = switch (method()) {
-            case PHONE -> phone;
-            case AUTHENTICATOR -> authenticator;
-            case CODE -> shown(authenticator) ? authenticator : code;
-            case BACKUP_CODE -> backup;
-            case ASK, UNKNOWN -> null;
+        case PHONE -> phone;
+        case AUTHENTICATOR -> authenticator;
+        case CODE -> shown(authenticator) ? authenticator : code;
+        case BACKUP_CODE -> backup;
+        case ASK, UNKNOWN -> null;
         };
-        if (row != null && shown(row)) Navigate.press(row);
-        else look();
+        if (row != null && shown(row)) {
+            Navigate.press(row);
+        } else {
+            look();
+        }
     }
 
     private static void anotherWay(Button anotherWay) {
-        if (shown(anotherWay)) Navigate.press(anotherWay);
-        else look();
+        if (shown(anotherWay)) {
+            Navigate.press(anotherWay);
+        } else {
+            look();
+        }
     }
 
     private static void submit(Button next, Button verify) {
@@ -172,6 +183,8 @@ public final class GoogleSignIn extends Bot {
     }
 
     private static void typed(Typed typed) {
-        if (!typed.isTyped()) Bot.stop(typed.why());
+        if (!typed.isTyped()) {
+            Bot.stop(typed.why());
+        }
     }
 }
