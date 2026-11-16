@@ -14,4 +14,10 @@ public class Running {
     public Plan plan() {
         return Plans.SIGN_IN;
     }
+
+    @SdkValue(SdkValue.Id.DO_SETUP)
+    @Param.Shown(description = "Set the game up first: tick it on a new computer or after changing a game setting")
+    public boolean doSetup() {
+        return true;
+    }
 }
