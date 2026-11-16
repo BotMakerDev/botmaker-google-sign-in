@@ -13,7 +13,7 @@ public final class Migrations {
     private Migrations() {
     }
 
-    @Refactor("write the replacement")
+    @Refactor(value = "write the replacement", done = true)
     @Migrate(name = "com.botmaker.sdk.api.signin.NeedsYou", kind = Migrate.Kind.FIELD)
     static Object CAPTCHA() {
         return null;
