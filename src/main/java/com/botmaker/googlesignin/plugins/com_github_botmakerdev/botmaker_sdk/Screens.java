@@ -1,19 +1,24 @@
 package com.botmaker.googlesignin.plugins.com_github_botmakerdev.botmaker_sdk;
 
-import com.botmaker.googlesignin.GoogleSignIn;
+import com.botmaker.googlesignin.Login;
 import com.botmaker.sdk.api.bot.SdkValue;
+import com.botmaker.sdk.api.params.Params;
 import com.botmaker.sdk.api.screens.Button;
-import com.botmaker.sdk.api.screens.Custom;
 import com.botmaker.sdk.api.screens.Do;
 import com.botmaker.sdk.api.screens.Mark;
 import com.botmaker.sdk.api.screens.Screen;
 import com.botmaker.sdk.api.screens.Setup;
+import com.botmaker.sdk.api.signin.NeedsYou;
+import com.botmaker.sdk.api.signin.Refusal;
 
 /**
  * Google's sign-in pages, one class and one constant each, told by what every look of the page shows: a field
  * Android states, and words, whatever their case. A message shown over a page (an address not found, a wrong
- * password) makes a page of its own, which the plain page is told apart from by that message's absence. Each page
- * has one {@code Do} serving {@link Goals#SIGNED_IN}: the plan does the one of the page Google shows.
+ * password) makes a page of its own, which the plain page is told apart from by that message's absence.
+ *
+ * <p>The map alone signs in: a page's {@code Do}s serve {@link Goals#SIGNED_IN}, the {@code first} preferred and the
+ * {@code last} a last resort, and a field types a part of the dealt {@link Login} by its method, BotMaker typing the
+ * secrets. A page only the user can answer is marked {@code needsYou}, one that ends the sign-in {@code refuses}.
  */
 @SdkValue(SdkValue.Id.SCREEN_MAP)
 public final class Screens {
@@ -24,9 +29,8 @@ public final class Screens {
         public final Mark notFound = Mark.of(Elements.COULDNT_FIND).absent();
         public final Mark invalid = Mark.of(Elements.VALID_EMAIL).absent();
         public final Mark noCaptcha = Mark.of(Elements.CAPTCHA).absent();
-        public final Button next = Button.of(Elements.NEXT);
-        public final Custom enter = Custom.of(GoogleSignIn::enterEmail);
-        public final Do signIn = Do.press(enter).serves(Goals.SIGNED_IN);
+        public final Button email = Button.of(Elements.FIELD).typesParameter(Login::email).clearing().submitting();
+        public final Do signIn = Do.press(email).serves(Goals.SIGNED_IN);
 
         @Override
         public Setup setup() {
@@ -38,12 +42,10 @@ public final class Screens {
         public final Mark forgot = Mark.of(Elements.FORGOT_EMAIL);
         public final Mark field = Mark.of(Elements.FIELD);
         public final Mark notFound = Mark.of(Elements.COULDNT_FIND);
-        public final Custom stop = Custom.of(GoogleSignIn::noSuchAccount);
-        public final Do end = Do.press(stop).serves(Goals.SIGNED_IN);
 
         @Override
         public Setup setup() {
-            return Setup.named("No such account");
+            return Setup.named("No such account").from(EMAIL.email).refuses(Refusal.NO_SUCH_ACCOUNT);
         }
     }
 
@@ -51,12 +53,10 @@ public final class Screens {
         public final Mark forgot = Mark.of(Elements.FORGOT_EMAIL);
         public final Mark field = Mark.of(Elements.FIELD);
         public final Mark invalid = Mark.of(Elements.VALID_EMAIL);
-        public final Custom stop = Custom.of(GoogleSignIn::noSuchAccount);
-        public final Do end = Do.press(stop).serves(Goals.SIGNED_IN);
 
         @Override
         public Setup setup() {
-            return Setup.named("Not an address");
+            return Setup.named("Not an address").from(EMAIL.email).refuses(Refusal.NO_SUCH_ACCOUNT);
         }
     }
 
@@ -65,25 +65,22 @@ public final class Screens {
         public final Mark wrong = Mark.of(Elements.WRONG_PASSWORD).absent();
         public final Mark again = Mark.of(Elements.ITS_YOU).absent();
         public final Mark noCaptcha = Mark.of(Elements.CAPTCHA).absent();
-        public final Button next = Button.of(Elements.NEXT);
-        public final Custom enter = Custom.of(GoogleSignIn::enterPassword);
-        public final Do signIn = Do.press(enter).serves(Goals.SIGNED_IN);
+        public final Button password = Button.of(Elements.PASSWORD).typesSecret(Login::password).submitting();
+        public final Do signIn = Do.press(password).serves(Goals.SIGNED_IN);
 
         @Override
         public Setup setup() {
-            return Setup.named("Password").from(EMAIL.enter);
+            return Setup.named("Password").from(EMAIL.email);
         }
     }
 
     public static final class WrongPassword extends Screen {
         public final Mark field = Mark.of(Elements.PASSWORD);
         public final Mark wrong = Mark.of(Elements.WRONG_PASSWORD);
-        public final Custom stop = Custom.of(GoogleSignIn::wrongPassword);
-        public final Do end = Do.press(stop).serves(Goals.SIGNED_IN);
 
         @Override
         public Setup setup() {
-            return Setup.named("Wrong password");
+            return Setup.named("Wrong password").from(PASSWORD.password).refuses(Refusal.WRONG_PASSWORD);
         }
     }
 
@@ -92,27 +89,30 @@ public final class Screens {
         public final Mark field = Mark.of(Elements.PASSWORD);
         public final Mark again = Mark.of(Elements.ITS_YOU);
         public final Mark wrong = Mark.of(Elements.WRONG_PASSWORD).absent();
-        public final Custom ask = Custom.of(GoogleSignIn::look);
-        public final Do signIn = Do.press(ask).serves(Goals.SIGNED_IN);
 
         @Override
         public Setup setup() {
-            return Setup.named("Password asked again");
+            return Setup.named("Password asked again").needsYou(NeedsYou.LOOK);
         }
     }
 
-    /** A code's page: an authenticator's, or one Google texted. */
+    /**
+     * An authenticator's code: typed by BotMaker from the account's key when it has one; else another way, which
+     * leads to the phone's prompt.
+     */
     public static final class Code extends Screen {
         public final Mark field = Mark.of(Elements.FIELD);
         public final Mark code = Mark.of(Elements.CODE);
         public final Mark notEmail = Mark.of(Elements.FORGOT_EMAIL).absent();
         public final Mark notBackup = Mark.of(Elements.BACKUP_CODES).absent();
+        public final Mark notTexted = Mark.of(Elements.TEXT_MESSAGE).absent();
+        public final Mark notWrong = Mark.of(Elements.WRONG_CODE).absent();
         public final Mark noPassword = Mark.of(Elements.PASSWORD).absent();
-        public final Button next = Button.of(Elements.NEXT).occasional();
-        public final Button verify = Button.of(Elements.VERIFY).occasional();
+        public final Button authenticator = Button.of(Elements.FIELD).typesSecret(Login::authenticator).clearing()
+                .submitting();
         public final Button anotherWay = Button.of(Elements.TRY_ANOTHER_WAY).occasional();
-        public final Custom enter = Custom.of(GoogleSignIn::enterCode);
-        public final Do signIn = Do.press(enter).serves(Goals.SIGNED_IN);
+        public final Do signIn = Do.press(authenticator).serves(Goals.SIGNED_IN).first();
+        public final Do away = Do.press(anotherWay).serves(Goals.SIGNED_IN).last();
 
         @Override
         public Setup setup() {
@@ -120,15 +120,41 @@ public final class Screens {
         }
     }
 
+    /**
+     * A code Google refused: an authenticator's key or this PC's clock is wrong, or a texted code mistyped. The user
+     * types it in BotMaker's prompt, so a wrong key is never typed again and again.
+     */
+    public static final class WrongCode extends Screen {
+        public final Mark field = Mark.of(Elements.FIELD);
+        public final Mark wrong = Mark.of(Elements.WRONG_CODE);
+        public final Mark noPassword = Mark.of(Elements.PASSWORD).absent();
+
+        @Override
+        public Setup setup() {
+            return Setup.named("Wrong code").from(CODE.authenticator).needsYou(NeedsYou.CODE);
+        }
+    }
+
+    /** A code Google texted: the user types it in BotMaker's prompt. */
+    public static final class TextedCode extends Screen {
+        public final Mark field = Mark.of(Elements.FIELD);
+        public final Mark texted = Mark.of(Elements.TEXT_MESSAGE);
+        public final Mark notWrong = Mark.of(Elements.WRONG_CODE).absent();
+        public final Mark noPassword = Mark.of(Elements.PASSWORD).absent();
+
+        @Override
+        public Setup setup() {
+            return Setup.named("Texted code").needsYou(NeedsYou.CODE);
+        }
+    }
+
+    /** A backup code's page: the login holds none, so another way. */
     public static final class BackupCode extends Screen {
         public final Mark field = Mark.of(Elements.FIELD);
         public final Mark backup = Mark.of(Elements.BACKUP_CODES);
         public final Mark noPassword = Mark.of(Elements.PASSWORD).absent();
-        public final Button next = Button.of(Elements.NEXT).occasional();
-        public final Button verify = Button.of(Elements.VERIFY).occasional();
         public final Button anotherWay = Button.of(Elements.TRY_ANOTHER_WAY).occasional();
-        public final Custom enter = Custom.of(GoogleSignIn::enterBackupCode);
-        public final Do signIn = Do.press(enter).serves(Goals.SIGNED_IN);
+        public final Do away = Do.press(anotherWay).serves(Goals.SIGNED_IN);
 
         @Override
         public Setup setup() {
@@ -136,33 +162,34 @@ public final class Screens {
         }
     }
 
-    /** Google's prompt sent to the account's phone. */
+    /** Google's prompt sent to the account's phone: the user approves it. */
     public static final class PhoneTap extends Screen {
         public final Mark check = Mark.of(Elements.CHECK_YOUR_PHONE);
         public final Mark noField = Mark.of(Elements.FIELD).absent();
-        public final Button anotherWay = Button.of(Elements.TRY_ANOTHER_WAY).occasional();
-        public final Custom answer = Custom.of(GoogleSignIn::phoneTap);
-        public final Do signIn = Do.press(answer).serves(Goals.SIGNED_IN);
 
         @Override
         public Setup setup() {
-            return Setup.named("Approve on the phone");
+            return Setup.named("Approve on the phone").needsYou(NeedsYou.PHONE);
         }
     }
 
     /**
      * The list of ways, under its usual heading: the one Try another way opens, or the one Google shows right after
-     * the email when the account also has a passkey, whose password row is then the way.
+     * the email when the account also has a passkey. The authenticator first when the login has its key, then the
+     * phone's ways, which the user answers, and the password last: offered beside a second step, it is the list past
+     * the password, which never goes back to it; offered alone, it is the list before it.
      */
     public static final class Ways extends Screen {
         public final Mark heading = Mark.of(Elements.CHOOSE_HOW);
+        public final Button authenticator = Button.of(Elements.AUTHENTICATOR_ROW).occasional()
+                .when(Params.when(Login::authenticator).isSet());
         public final Button password = Button.of(Elements.PASSWORD_ROW).occasional();
         public final Button phone = Button.of(Elements.PHONE_ROW).occasional();
-        public final Button authenticator = Button.of(Elements.AUTHENTICATOR_ROW).occasional();
         public final Button code = Button.of(Elements.CODE_ROW).occasional();
-        public final Button backup = Button.of(Elements.BACKUP_ROW).occasional();
-        public final Custom pick = Custom.of(GoogleSignIn::pickWay);
-        public final Do signIn = Do.press(pick).serves(Goals.SIGNED_IN);
+        public final Do byAuthenticator = Do.press(authenticator).serves(Goals.SIGNED_IN).first();
+        public final Do byPhone = Do.press(phone).serves(Goals.SIGNED_IN);
+        public final Do byCode = Do.press(code).serves(Goals.SIGNED_IN);
+        public final Do byPassword = Do.press(password).serves(Goals.SIGNED_IN).last();
 
         @Override
         public Setup setup() {
@@ -173,12 +200,13 @@ public final class Screens {
     /** The same list under the heading Google gives it after a way that didn't suit. */
     public static final class OtherWays extends Screen {
         public final Mark heading = Mark.of(Elements.ANOTHER_WAY_LIST);
+        public final Button authenticator = Button.of(Elements.AUTHENTICATOR_ROW).occasional()
+                .when(Params.when(Login::authenticator).isSet());
         public final Button phone = Button.of(Elements.PHONE_ROW).occasional();
-        public final Button authenticator = Button.of(Elements.AUTHENTICATOR_ROW).occasional();
         public final Button code = Button.of(Elements.CODE_ROW).occasional();
-        public final Button backup = Button.of(Elements.BACKUP_ROW).occasional();
-        public final Custom pick = Custom.of(GoogleSignIn::pickOtherWay);
-        public final Do signIn = Do.press(pick).serves(Goals.SIGNED_IN);
+        public final Do byAuthenticator = Do.press(authenticator).serves(Goals.SIGNED_IN).first();
+        public final Do byPhone = Do.press(phone).serves(Goals.SIGNED_IN);
+        public final Do byCode = Do.press(code).serves(Goals.SIGNED_IN);
 
         @Override
         public Setup setup() {
@@ -186,12 +214,12 @@ public final class Screens {
         }
     }
 
+    /** A passkey is the device's owner's: another way. */
     public static final class Passkey extends Screen {
         public final Mark passkey = Mark.of(Elements.PASSKEY);
         public final Mark noWays = Mark.of(Elements.CHOOSE_HOW).absent();
         public final Button anotherWay = Button.of(Elements.TRY_ANOTHER_WAY).occasional();
-        public final Custom away = Custom.of(GoogleSignIn::passkey);
-        public final Do signIn = Do.press(away).serves(Goals.SIGNED_IN);
+        public final Do away = Do.press(anotherWay).serves(Goals.SIGNED_IN);
 
         @Override
         public Setup setup() {
@@ -229,23 +257,19 @@ public final class Screens {
 
     public static final class Captcha extends Screen {
         public final Mark words = Mark.of(Elements.CAPTCHA);
-        public final Custom ask = Custom.of(GoogleSignIn::captcha);
-        public final Do signIn = Do.press(ask).serves(Goals.SIGNED_IN);
 
         @Override
         public Setup setup() {
-            return Setup.named("Captcha");
+            return Setup.named("Captcha").needsYou(NeedsYou.CAPTCHA);
         }
     }
 
     public static final class Refused extends Screen {
         public final Mark words = Mark.of(Elements.REFUSED);
-        public final Custom stop = Custom.of(GoogleSignIn::refused);
-        public final Do end = Do.press(stop).serves(Goals.SIGNED_IN);
 
         @Override
         public Setup setup() {
-            return Setup.named("Sign-in refused");
+            return Setup.named("Sign-in refused").refuses(Refusal.REFUSED);
         }
     }
 
@@ -264,8 +288,8 @@ public final class Screens {
         public final Mark heading = Mark.of(Elements.GOOGLE_SERVICES);
         public final Button more = Button.of(Elements.MORE).occasional();
         public final Button accept = Button.of(Elements.ACCEPT).occasional();
-        public final Custom next = Custom.of(GoogleSignIn::services);
-        public final Do signIn = Do.press(next).serves(Goals.SIGNED_IN);
+        public final Do scroll = Do.press(more).serves(Goals.SIGNED_IN).first();
+        public final Do signIn = Do.press(accept).serves(Goals.SIGNED_IN);
 
         @Override
         public Setup setup() {
@@ -279,8 +303,8 @@ public final class Screens {
         public final Mark notEmail = Mark.of(Elements.FORGOT_EMAIL).absent();
         public final Button skip = Button.of(Elements.SKIP).occasional();
         public final Button notNow = Button.of(Elements.NOT_NOW).occasional();
-        public final Custom away = Custom.of(GoogleSignIn::skipPhone);
-        public final Do signIn = Do.press(away).serves(Goals.SIGNED_IN);
+        public final Do skipIt = Do.press(skip).serves(Goals.SIGNED_IN).first();
+        public final Do notYet = Do.press(notNow).serves(Goals.SIGNED_IN);
 
         @Override
         public Setup setup() {
@@ -295,6 +319,8 @@ public final class Screens {
     public static final WrongPassword WRONG_PASSWORD = new WrongPassword();
     public static final PasswordAgain PASSWORD_AGAIN = new PasswordAgain();
     public static final Code CODE = new Code();
+    public static final WrongCode WRONG_CODE = new WrongCode();
+    public static final TextedCode TEXTED_CODE = new TextedCode();
     public static final BackupCode BACKUP_CODE = new BackupCode();
     public static final PhoneTap PHONE_TAP = new PhoneTap();
     public static final Ways WAYS = new Ways();

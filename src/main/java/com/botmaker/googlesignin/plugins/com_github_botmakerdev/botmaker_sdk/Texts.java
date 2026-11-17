@@ -15,10 +15,10 @@ public final class Texts {
     public static final Words VALID_EMAIL = Words.of("enter a valid email");
     public static final Words WRONG_PASSWORD = Words.of("wrong password");
     public static final Words ITS_YOU = Words.of("it's you");
-    public static final Words NEXT = Words.of("Next");
-    public static final Words VERIFY = Words.of("Verify");
     public static final Words CODE = Words.of("code");
     public static final Words BACKUP_CODES = Words.of("8-digit backup code");
+    public static final Words TEXT_MESSAGE = Words.of("text message");
+    public static final Words WRONG_CODE = Words.of("wrong code");
     public static final Words CHECK_YOUR_PHONE = Words.of("check your phone");
     public static final Words CHOOSE_HOW = Words.of("choose how you want to sign in");
     public static final Words ANOTHER_WAY_LIST = Words.of("verify it's you another way");
@@ -38,7 +38,6 @@ public final class Texts {
     public static final Words TAP_YES = Words.of("tap yes");
     public static final Words AUTHENTICATOR = Words.of("google authenticator");
     public static final Words VERIFICATION_CODE = Words.of("verification code");
-    public static final Words BACKUP_CODE = Words.of("backup code");
 
     private Texts() {}
 }

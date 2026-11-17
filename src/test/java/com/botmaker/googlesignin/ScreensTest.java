@@ -1,16 +1,29 @@
 package com.botmaker.googlesignin;
 
+import com.botmaker.googlesignin.plugins.com_github_botmakerdev.botmaker_sdk.Goals;
 import com.botmaker.googlesignin.plugins.com_github_botmakerdev.botmaker_sdk.Screens;
+import com.botmaker.sdk.api.screens.Custom;
+import com.botmaker.sdk.api.screens.Do;
+import com.botmaker.sdk.api.screens.Screen;
 import com.botmaker.sdk.api.screens.ScreenCheck;
+import com.botmaker.sdk.api.screens.Setup;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Each of Google's pages reads as exactly one of the map's screens: the trees captured on the emulators, and small
@@ -139,11 +152,12 @@ class ScreensTest {
     void readsTheCodePages() {
         assertEquals(List.of("CODE"), on(tree(words("2-Step Verification", 1), field(3), words("Enter the code", 4),
                 words("Next", 5), words("Try another way", 6))));
-        assertEquals(List.of("CODE"), on(tree(words("2-Step Verification", 1), field(3),
-                words("Wrong code. Try again.", 4), words("Next", 5), words("Try another way", 6))));
-        assertEquals(List.of("CODE"), on(tree(words("2-Step Verification", 1), field(3),
+        assertEquals(List.of("WRONG_CODE"), on(tree(words("2-Step Verification", 1), field(3),
+                words("Wrong code. Try again.", 4), words("Next", 5), words("Try another way", 6))),
+                "a refused code is never typed again");
+        assertEquals(List.of("TEXTED_CODE"), on(tree(words("2-Step Verification", 1), field(3),
                 words("A text message with a 6-digit verification code was just sent", 4), words("Next", 5))),
-                "a texted code");
+                "a texted code is the user's");
         assertEquals(List.of("CODE"), on(tree(words("2-Step Verification", 1), field(3),
                 words("Lost your phone? Use a backup code", 4))), "a backup code offered is not its page");
         assertEquals(List.of("BACKUP_CODE"), on(tree(words("2-Step Verification", 1), field(3),
@@ -165,5 +179,43 @@ class ScreensTest {
         assertEquals(List.of("SERVICES"), on(tree(words("Google services", 1), words("More", 5))));
         assertEquals(List.of("PHONE_PROMPT"), on(tree(words("Add phone number?", 1), words("Skip", 5))));
         assertEquals(List.of(), on(tree(words("Choose an account", 1))), "the chooser never adds an account");
+    }
+
+    /** The map's screens, by constant name. */
+    private static Map<String, Screen> screens() throws IllegalAccessException {
+        Map<String, Screen> screens = new TreeMap<>();
+        for (Field constant : Screens.class.getFields()) {
+            if (Modifier.isStatic(constant.getModifiers()) && constant.get(null) instanceof Screen screen) {
+                screens.put(constant.getName(), screen);
+            }
+        }
+        return screens;
+    }
+
+    @Test
+    void theMapSignsInWithNoCodeOfTheBot() throws IllegalAccessException {
+        for (Map.Entry<String, Screen> screen : screens().entrySet()) {
+            for (Field field : screen.getValue().getClass().getFields()) {
+                assertFalse(Custom.class.isAssignableFrom(field.getType()),
+                        screen.getKey() + "." + field.getName() + " is code of the bot, not the map");
+            }
+        }
+        List<String> methods = Arrays.stream(GoogleSignIn.class.getDeclaredMethods())
+                .filter(method -> !method.isSynthetic()).map(Method::getName).toList();
+        assertEquals(List.of("main"), methods, "the bot's class only starts the run");
+    }
+
+    @Test
+    void everyPageServesTheSignInOrIsMarked() throws IllegalAccessException {
+        for (Map.Entry<String, Screen> entry : screens().entrySet()) {
+            Screen screen = entry.getValue();
+            Setup setup = screen.setup();
+            boolean marked = setup.needsYou() != null || setup.refuses() != null;
+            boolean serves = false;
+            for (Field field : screen.getClass().getFields()) {
+                if (field.get(screen) instanceof Do action && action.serves().contains(Goals.SIGNED_IN)) serves = true;
+            }
+            assertTrue(marked != serves, entry.getKey() + " serves the sign-in or is marked, one of the two");
+        }
     }
 }

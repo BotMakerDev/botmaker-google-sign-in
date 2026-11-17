@@ -18,10 +18,11 @@ public final class Elements {
     public static final Element VALID_EMAIL = Element.byContaining(Texts.VALID_EMAIL);
     public static final Element WRONG_PASSWORD = Element.byContaining(Texts.WRONG_PASSWORD);
     public static final Element ITS_YOU = Element.byContaining(Texts.ITS_YOU);
-    public static final Element NEXT = Element.byText(Texts.NEXT);
-    public static final Element VERIFY = Element.byText(Texts.VERIFY);
     public static final Element CODE = Element.byContaining(Texts.CODE);
     public static final Element BACKUP_CODES = Element.byContaining(Texts.BACKUP_CODES);
+    /** What a code Google texted says of itself. */
+    public static final Element TEXT_MESSAGE = Element.byContaining(Texts.TEXT_MESSAGE);
+    public static final Element WRONG_CODE = Element.byContaining(Texts.WRONG_CODE);
     public static final Element CHECK_YOUR_PHONE = Element.byContaining(Texts.CHECK_YOUR_PHONE);
     public static final Element CHOOSE_HOW = Element.byContaining(Texts.CHOOSE_HOW);
     public static final Element ANOTHER_WAY_LIST = Element.byContaining(Texts.ANOTHER_WAY_LIST);
@@ -46,7 +47,6 @@ public final class Elements {
     public static final Element AUTHENTICATOR_ROW = Element.byContaining(Texts.AUTHENTICATOR);
     /** The first code's row: a texted code's, or the authenticator's when no other is offered. */
     public static final Element CODE_ROW = Element.byContaining(Texts.VERIFICATION_CODE).index(0);
-    public static final Element BACKUP_ROW = Element.byContaining(Texts.BACKUP_CODE);
 
     private Elements() {}
 }
