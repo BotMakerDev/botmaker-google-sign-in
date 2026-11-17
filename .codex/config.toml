@@ -1,0 +1,3 @@
+# Written by BotMaker: this bot changes through BotMaker's MCP tools only (AGENTS.md says how).
+# Codex reads this file once you trust this folder.
+sandbox_mode = "read-only"
