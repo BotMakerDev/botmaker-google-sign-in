@@ -19,7 +19,7 @@ public final class Migrations {
         return null;
     }
 
-    @Refactor("write the replacement")
+    @Refactor(value = "write the replacement", done = true)
     @Migrate(name = "com.botmaker.sdk.api.signin.SecondStep", kind = Migrate.Kind.FIELD)
     static Object BACKUP_CODE() {
         return null;
