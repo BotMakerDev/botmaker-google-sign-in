@@ -10,6 +10,7 @@ import com.botmaker.sdk.api.screens.Screen;
 import com.botmaker.sdk.api.screens.Setup;
 import com.botmaker.sdk.api.signin.NeedsYou;
 import com.botmaker.sdk.api.signin.Refusal;
+import com.botmaker.sdk.api.geometry.Point;
 
 /**
  * Google's sign-in pages, one class and one constant each, told by what every look of the page shows: a field
@@ -29,7 +30,7 @@ public final class Screens {
 
         @Override
         public Setup setup() {
-            return Setup.named("Home").start().shot("screens/HOME.png");
+            return Setup.named("Home").start().at(new Point(-173, 5)).shot("screens/HOME.png");
         }
     }
 
