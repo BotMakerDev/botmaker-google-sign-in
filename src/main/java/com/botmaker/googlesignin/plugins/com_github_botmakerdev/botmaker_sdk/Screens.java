@@ -29,7 +29,7 @@ public final class Screens {
 
         @Override
         public Setup setup() {
-            return Setup.named("Home").start();
+            return Setup.named("Home").start().shot("screens/HOME.png");
         }
     }
 
