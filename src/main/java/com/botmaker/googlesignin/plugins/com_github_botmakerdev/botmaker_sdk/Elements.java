@@ -54,6 +54,10 @@ public final class Elements {
     public static final Element PASSWORDS_ACCOUNTS = Element.byHolding(Texts.PASSWORDS_ACCOUNTS)
             .shot("elements/passwords_accounts.png");
     public static final Element SEARCH_ACTION_BAR_TWO_PANE = Element.byId("search_action_bar_two_pane");
+    public static final Element LAYOUT_RESULTS = Element.byId("layout_results");
+    public static final Element NAVIGATE_UP = Element.byLabel(Texts.NAVIGATE_UP);
+    public static final Element SEARCH_SRC_TEXT = Element.byId("search_src_text");
+    public static final Element MORE_OPTIONS = Element.byLabel(Texts.MORE_OPTIONS);
 
     private Elements() {}
 }

@@ -42,6 +42,8 @@ public final class Texts {
     public static final Words NEXT = Words.of("Next");
     public static final Words PRIVATE_DNS = Words.of("Private DNS");
     public static final Words PASSWORDS_ACCOUNTS = Words.of("Passwords & accounts");
+    public static final Words NAVIGATE_UP = Words.of("Navigate up");
+    public static final Words MORE_OPTIONS = Words.of("More options");
 
     private Texts() {}
 }

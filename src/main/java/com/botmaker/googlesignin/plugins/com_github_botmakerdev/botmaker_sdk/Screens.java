@@ -26,10 +26,16 @@ public final class Screens {
 
     public static final class Home extends Screen {
         public final Mark privateDns = Mark.of(Elements.PRIVATE_DNS);
-        public final Button searchActionBarTwoPane = Button.of(Elements.SEARCH_ACTION_BAR_TWO_PANE).free();
+        public final Button searchActionBarTwoPane = Button.of(Elements.SEARCH_ACTION_BAR_TWO_PANE).tried().free();
         @Override
         public Setup setup() {
-            return Setup.named("Home").start().at(new Point(-266, -48)).shot("screens/HOME.png");
+            return Setup
+                    .named("Home")
+                    .start()
+                    .notes(
+                            "searchActionBarTwoPane: Changes \"Navigate up\" shown; #search_src_text shown; \"More options\" shown; #search_action_bar_two_pane hidden")
+                    .at(new Point(-266, -48))
+                    .shot("screens/HOME.png");
         }
     }
 
