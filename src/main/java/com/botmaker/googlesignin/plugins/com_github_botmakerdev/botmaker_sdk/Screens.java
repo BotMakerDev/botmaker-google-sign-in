@@ -52,22 +52,6 @@ public final class Screens {
         }
     }
 
-    /** A second step the bot doesn't read, under any heading, offering another way. */
-    public static final class TwoStep extends Screen {
-        public final Button anotherWay = Button.of(Elements.TRY_ANOTHER_WAY).marking();
-        public final Mark noPasskey = Mark.of(Elements.PASSKEY).absent();
-        public final Mark noWays = Mark.of(Elements.CHOOSE_HOW).absent();
-        public final Mark noPhone = Mark.of(Elements.CHECK_YOUR_PHONE).absent();
-        public final Mark noField = Mark.of(Elements.FIELD).absent();
-        public final Mark noPassword = Mark.of(Elements.PASSWORD).absent();
-        public final Do signIn = Do.press(anotherWay).serves(Goals.SIGNED_IN);
-
-        @Override
-        public Setup setup() {
-            return Setup.named("2-Step Verification");
-        }
-    }
-
     public static final class Captcha extends Screen {
         public final Mark words = Mark.of(Elements.CAPTCHA);
 
@@ -127,7 +111,6 @@ public final class Screens {
 
     public static final Email EMAIL = new Email();
     public static final Password PASSWORD = new Password();
-    public static final TwoStep TWO_STEP = new TwoStep();
     public static final Captcha CAPTCHA = new Captcha();
     public static final Refused REFUSED = new Refused();
     public static final Terms TERMS = new Terms();
