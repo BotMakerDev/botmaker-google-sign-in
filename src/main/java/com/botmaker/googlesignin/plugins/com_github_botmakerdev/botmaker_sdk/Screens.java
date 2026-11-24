@@ -38,21 +38,6 @@ public final class Screens {
         }
     }
 
-    public static final class Password extends Screen {
-        public final Mark field = Mark.of(Elements.PASSWORD);
-        public final Mark wrong = Mark.of(Elements.WRONG_PASSWORD).absent();
-        public final Mark again = Mark.of(Elements.ITS_YOU).absent();
-        public final Mark noCaptcha = Mark.of(Elements.CAPTCHA).absent();
-        public final Button password = Button.of(Elements.PASSWORD).typesSecret(Login::password).submitting();
-        public final Do signIn = Do.press(password).serves(Goals.SIGNED_IN);
-
-        @Override
-        public Setup setup() {
-            return Setup.named("Password").from(EMAIL.email);
-        }
-    }
-
     public static final Email EMAIL = new Email();
-    public static final Password PASSWORD = new Password();
     private Screens() {}
 }
