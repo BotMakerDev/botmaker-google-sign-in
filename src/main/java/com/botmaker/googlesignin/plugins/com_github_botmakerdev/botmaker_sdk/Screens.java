@@ -24,6 +24,8 @@ import com.botmaker.sdk.api.signin.Refusal;
 public final class Screens {
 
     public static final class Home extends Screen {
+        public final Mark privateDns = Mark.of(Elements.PRIVATE_DNS);
+
         @Override
         public Setup setup() {
             return Setup.named("Home").start();

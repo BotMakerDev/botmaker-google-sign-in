@@ -40,6 +40,7 @@ public final class Texts {
     public static final Words VERIFICATION_CODE = Words.of("verification code");
     public static final Words FORGOT_EMAIL_2 = Words.of("Forgot email?");
     public static final Words NEXT = Words.of("Next");
+    public static final Words PRIVATE_DNS = Words.of("Private DNS");
 
     private Texts() {}
 }
