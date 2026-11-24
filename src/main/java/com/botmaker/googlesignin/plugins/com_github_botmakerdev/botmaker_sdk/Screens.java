@@ -76,21 +76,6 @@ public final class Screens {
         }
     }
 
-    /**
-     * A code Google refused: an authenticator's key or this PC's clock is wrong, or a texted code mistyped. The user
-     * types it in BotMaker's prompt, so a wrong key is never typed again and again.
-     */
-    public static final class WrongCode extends Screen {
-        public final Mark field = Mark.of(Elements.FIELD);
-        public final Mark wrong = Mark.of(Elements.WRONG_CODE);
-        public final Mark noPassword = Mark.of(Elements.PASSWORD).absent();
-
-        @Override
-        public Setup setup() {
-            return Setup.named("Wrong code").from(CODE.authenticator).needsYou(NeedsYou.CODE);
-        }
-    }
-
     /** A code Google texted: the user types it in BotMaker's prompt. */
     public static final class TextedCode extends Screen {
         public final Mark field = Mark.of(Elements.FIELD);
@@ -271,7 +256,6 @@ public final class Screens {
     public static final Email EMAIL = new Email();
     public static final Password PASSWORD = new Password();
     public static final Code CODE = new Code();
-    public static final WrongCode WRONG_CODE = new WrongCode();
     public static final TextedCode TEXTED_CODE = new TextedCode();
     public static final BackupCode BACKUP_CODE = new BackupCode();
     public static final PhoneTap PHONE_TAP = new PhoneTap();
