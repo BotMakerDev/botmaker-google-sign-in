@@ -47,6 +47,8 @@ public final class Elements {
     public static final Element AUTHENTICATOR_ROW = Element.byContaining(Texts.AUTHENTICATOR);
     /** The first code's row: a texted code's, or the authenticator's when no other is offered. */
     public static final Element CODE_ROW = Element.byContaining(Texts.VERIFICATION_CODE).index(0);
+    public static final Element FORGOT_EMAIL_2 = Element.byText(Texts.FORGOT_EMAIL_2)
+            .shot("elements/forgot_email_2.png");
 
     private Elements() {}
 }

@@ -24,6 +24,8 @@ import com.botmaker.sdk.api.signin.Refusal;
 public final class Screens {
 
     public static final class Email extends Screen {
+        public final Mark forgotEmail = Mark.of(Elements.FORGOT_EMAIL_2);
+
         @Override
         public Setup setup() {
             return Setup.named("Email").start();
