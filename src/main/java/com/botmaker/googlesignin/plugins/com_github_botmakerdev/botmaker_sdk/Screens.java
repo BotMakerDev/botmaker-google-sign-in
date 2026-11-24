@@ -52,15 +52,6 @@ public final class Screens {
         }
     }
 
-    public static final class Captcha extends Screen {
-        public final Mark words = Mark.of(Elements.CAPTCHA);
-
-        @Override
-        public Setup setup() {
-            return Setup.named("Captcha").needsYou(NeedsYou.CAPTCHA);
-        }
-    }
-
     public static final class Refused extends Screen {
         public final Mark words = Mark.of(Elements.REFUSED);
 
@@ -111,7 +102,6 @@ public final class Screens {
 
     public static final Email EMAIL = new Email();
     public static final Password PASSWORD = new Password();
-    public static final Captcha CAPTCHA = new Captcha();
     public static final Refused REFUSED = new Refused();
     public static final Terms TERMS = new Terms();
     public static final Services SERVICES = new Services();
