@@ -52,16 +52,6 @@ public final class Screens {
         }
     }
 
-    public static final class Terms extends Screen {
-        public final Button agree = Button.of(Elements.I_AGREE).marking();
-        public final Do signIn = Do.press(agree).serves(Goals.SIGNED_IN);
-
-        @Override
-        public Setup setup() {
-            return Setup.named("Google's terms");
-        }
-    }
-
     /** Google's services: More scrolls the page down until it turns into Accept. */
     public static final class Services extends Screen {
         public final Mark heading = Mark.of(Elements.GOOGLE_SERVICES);
@@ -93,7 +83,6 @@ public final class Screens {
 
     public static final Email EMAIL = new Email();
     public static final Password PASSWORD = new Password();
-    public static final Terms TERMS = new Terms();
     public static final Services SERVICES = new Services();
     public static final PhonePrompt PHONE_PROMPT = new PhonePrompt();
 
