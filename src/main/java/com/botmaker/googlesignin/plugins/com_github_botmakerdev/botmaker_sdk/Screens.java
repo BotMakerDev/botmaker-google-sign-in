@@ -52,19 +52,6 @@ public final class Screens {
         }
     }
 
-    /** A passkey is the device's owner's: another way. */
-    public static final class Passkey extends Screen {
-        public final Mark passkey = Mark.of(Elements.PASSKEY);
-        public final Mark noWays = Mark.of(Elements.CHOOSE_HOW).absent();
-        public final Button anotherWay = Button.of(Elements.TRY_ANOTHER_WAY).occasional();
-        public final Do away = Do.press(anotherWay).serves(Goals.SIGNED_IN);
-
-        @Override
-        public Setup setup() {
-            return Setup.named("Passkey");
-        }
-    }
-
     /** Android's sheet offering a screen lock for passkeys, over the sign-in: closed by a tap above it, never set up. */
     public static final class PasskeyScreenLock extends Screen {
         public final Mark words = Mark.of(Elements.PASSKEY_SCREEN_LOCK);
@@ -152,7 +139,6 @@ public final class Screens {
 
     public static final Email EMAIL = new Email();
     public static final Password PASSWORD = new Password();
-    public static final Passkey PASSKEY = new Passkey();
     public static final PasskeyScreenLock PASSKEY_SCREEN_LOCK = new PasskeyScreenLock();
     public static final TwoStep TWO_STEP = new TwoStep();
     public static final Captcha CAPTCHA = new Captcha();
