@@ -52,16 +52,6 @@ public final class Screens {
         }
     }
 
-    public static final class WrongPassword extends Screen {
-        public final Mark field = Mark.of(Elements.PASSWORD);
-        public final Mark wrong = Mark.of(Elements.WRONG_PASSWORD);
-
-        @Override
-        public Setup setup() {
-            return Setup.named("Wrong password").from(PASSWORD.password).refuses(Refusal.WRONG_PASSWORD);
-        }
-    }
-
     /** Google asking the password again to be sure it's the user: BotMaker types it once only. */
     public static final class PasswordAgain extends Screen {
         public final Mark field = Mark.of(Elements.PASSWORD);
@@ -292,7 +282,6 @@ public final class Screens {
 
     public static final Email EMAIL = new Email();
     public static final Password PASSWORD = new Password();
-    public static final WrongPassword WRONG_PASSWORD = new WrongPassword();
     public static final PasswordAgain PASSWORD_AGAIN = new PasswordAgain();
     public static final Code CODE = new Code();
     public static final WrongCode WRONG_CODE = new WrongCode();
