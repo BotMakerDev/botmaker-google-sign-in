@@ -41,6 +41,20 @@ public final class Screens {
 
     public static final Home HOME = new Home();
 
+    public static final class Page extends Screen {
+        public final Button navigateUp = Button.of(Elements.NAVIGATE_UP).free();
+        public final Button searchSrcText = Button.of(Elements.SEARCH_SRC_TEXT).free();
+        public final Button moreOptions = Button.of(Elements.MORE_OPTIONS).free();
+        public final Mark layoutResults = Mark.of(Elements.LAYOUT_RESULTS);
+
+        @Override
+        public Setup setup() {
+            return Setup.named("Page").allCut();
+        }
+    }
+
+    public static final Page PAGE = new Page();
+
     private Screens() {
     }
 }
