@@ -38,17 +38,6 @@ public final class Screens {
         }
     }
 
-    public static final class InvalidEmail extends Screen {
-        public final Mark forgot = Mark.of(Elements.FORGOT_EMAIL);
-        public final Mark field = Mark.of(Elements.FIELD);
-        public final Mark invalid = Mark.of(Elements.VALID_EMAIL);
-
-        @Override
-        public Setup setup() {
-            return Setup.named("Not an address").from(EMAIL.email).refuses(Refusal.NO_SUCH_ACCOUNT);
-        }
-    }
-
     public static final class Password extends Screen {
         public final Mark field = Mark.of(Elements.PASSWORD);
         public final Mark wrong = Mark.of(Elements.WRONG_PASSWORD).absent();
@@ -302,7 +291,6 @@ public final class Screens {
     }
 
     public static final Email EMAIL = new Email();
-    public static final InvalidEmail INVALID_EMAIL = new InvalidEmail();
     public static final Password PASSWORD = new Password();
     public static final WrongPassword WRONG_PASSWORD = new WrongPassword();
     public static final PasswordAgain PASSWORD_AGAIN = new PasswordAgain();
