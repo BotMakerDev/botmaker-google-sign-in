@@ -41,6 +41,7 @@ public final class Texts {
     public static final Words FORGOT_EMAIL_2 = Words.of("Forgot email?");
     public static final Words NEXT = Words.of("Next");
     public static final Words PRIVATE_DNS = Words.of("Private DNS");
+    public static final Words PASSWORDS_ACCOUNTS = Words.of("Passwords & accounts");
 
     private Texts() {}
 }

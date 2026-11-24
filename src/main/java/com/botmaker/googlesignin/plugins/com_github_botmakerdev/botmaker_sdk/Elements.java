@@ -51,6 +51,8 @@ public final class Elements {
             .shot("elements/forgot_email_2.png");
     public static final Element NEXT = Element.byText(Texts.NEXT).shot("elements/next.png");
     public static final Element PRIVATE_DNS = Element.byHolding(Texts.PRIVATE_DNS).shot("elements/private_dns.png");
+    public static final Element PASSWORDS_ACCOUNTS = Element.byHolding(Texts.PASSWORDS_ACCOUNTS)
+            .shot("elements/passwords_accounts.png");
 
     private Elements() {}
 }
