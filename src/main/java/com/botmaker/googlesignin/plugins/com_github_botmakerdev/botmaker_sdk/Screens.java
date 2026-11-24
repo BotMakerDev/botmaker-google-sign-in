@@ -23,21 +23,5 @@ import com.botmaker.sdk.api.signin.Refusal;
 @SdkValue(SdkValue.Id.SCREEN_MAP)
 public final class Screens {
 
-    public static final class Email extends Screen {
-        public final Mark forgot = Mark.of(Elements.FORGOT_EMAIL);
-        public final Mark field = Mark.of(Elements.FIELD);
-        public final Mark notFound = Mark.of(Elements.COULDNT_FIND).absent();
-        public final Mark invalid = Mark.of(Elements.VALID_EMAIL).absent();
-        public final Mark noCaptcha = Mark.of(Elements.CAPTCHA).absent();
-        public final Button email = Button.of(Elements.FIELD).typesParameter(Login::email).clearing().submitting();
-        public final Do signIn = Do.press(email).serves(Goals.SIGNED_IN);
-
-        @Override
-        public Setup setup() {
-            return Setup.named("Email").start().shot("screens/EMAIL.png");
-        }
-    }
-
-    public static final Email EMAIL = new Email();
     private Screens() {}
 }
