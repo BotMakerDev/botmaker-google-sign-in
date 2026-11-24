@@ -52,30 +52,6 @@ public final class Screens {
         }
     }
 
-    /**
-     * The list of ways, under its usual heading: the one Try another way opens, or the one Google shows right after
-     * the email when the account also has a passkey. The authenticator first when the login has its key, then the
-     * phone's ways, which the user answers, and the password last: offered beside a second step, it is the list past
-     * the password, which never goes back to it; offered alone, it is the list before it.
-     */
-    public static final class Ways extends Screen {
-        public final Mark heading = Mark.of(Elements.CHOOSE_HOW);
-        public final Button authenticator = Button.of(Elements.AUTHENTICATOR_ROW).occasional()
-                .when(Params.when(Login::authenticator).isSet());
-        public final Button password = Button.of(Elements.PASSWORD_ROW).occasional();
-        public final Button phone = Button.of(Elements.PHONE_ROW).occasional();
-        public final Button code = Button.of(Elements.CODE_ROW).occasional();
-        public final Do byAuthenticator = Do.press(authenticator).serves(Goals.SIGNED_IN).first();
-        public final Do byPhone = Do.press(phone).serves(Goals.SIGNED_IN);
-        public final Do byCode = Do.press(code).serves(Goals.SIGNED_IN);
-        public final Do byPassword = Do.press(password).serves(Goals.SIGNED_IN).last();
-
-        @Override
-        public Setup setup() {
-            return Setup.named("Ways to sign in");
-        }
-    }
-
     /** The same list under the heading Google gives it after a way that didn't suit. */
     public static final class OtherWays extends Screen {
         public final Mark heading = Mark.of(Elements.ANOTHER_WAY_LIST);
@@ -193,7 +169,6 @@ public final class Screens {
 
     public static final Email EMAIL = new Email();
     public static final Password PASSWORD = new Password();
-    public static final Ways WAYS = new Ways();
     public static final OtherWays OTHER_WAYS = new OtherWays();
     public static final Passkey PASSKEY = new Passkey();
     public static final PasskeyScreenLock PASSKEY_SCREEN_LOCK = new PasskeyScreenLock();
