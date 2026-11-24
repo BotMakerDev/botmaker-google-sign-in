@@ -23,6 +23,15 @@ import com.botmaker.sdk.api.signin.Refusal;
 @SdkValue(SdkValue.Id.SCREEN_MAP)
 public final class Screens {
 
+    public static final class Home extends Screen {
+        @Override
+        public Setup setup() {
+            return Setup.named("Home").start();
+        }
+    }
+
+    public static final Home HOME = new Home();
+
     private Screens() {
     }
 }
