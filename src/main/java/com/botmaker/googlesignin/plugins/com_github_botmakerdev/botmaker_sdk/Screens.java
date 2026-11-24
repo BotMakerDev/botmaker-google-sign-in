@@ -30,7 +30,7 @@ public final class Screens {
 
         @Override
         public Setup setup() {
-            return Setup.named("Home").start().at(new Point(-173, 5)).shot("screens/HOME.png");
+            return Setup.named("Home").start().at(new Point(-266, -48)).shot("screens/HOME.png");
         }
     }
 
