@@ -52,18 +52,6 @@ public final class Screens {
         }
     }
 
-    /** Google asking the password again to be sure it's the user: BotMaker types it once only. */
-    public static final class PasswordAgain extends Screen {
-        public final Mark field = Mark.of(Elements.PASSWORD);
-        public final Mark again = Mark.of(Elements.ITS_YOU);
-        public final Mark wrong = Mark.of(Elements.WRONG_PASSWORD).absent();
-
-        @Override
-        public Setup setup() {
-            return Setup.named("Password asked again").needsYou(NeedsYou.LOOK);
-        }
-    }
-
     /**
      * An authenticator's code: typed by BotMaker from the account's key when it has one; else another way, which
      * leads to the phone's prompt.
@@ -282,7 +270,6 @@ public final class Screens {
 
     public static final Email EMAIL = new Email();
     public static final Password PASSWORD = new Password();
-    public static final PasswordAgain PASSWORD_AGAIN = new PasswordAgain();
     public static final Code CODE = new Code();
     public static final WrongCode WRONG_CODE = new WrongCode();
     public static final TextedCode TEXTED_CODE = new TextedCode();
