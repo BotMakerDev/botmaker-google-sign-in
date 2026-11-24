@@ -52,20 +52,6 @@ public final class Screens {
         }
     }
 
-    /** Google's services: More scrolls the page down until it turns into Accept. */
-    public static final class Services extends Screen {
-        public final Mark heading = Mark.of(Elements.GOOGLE_SERVICES);
-        public final Button more = Button.of(Elements.MORE).occasional();
-        public final Button accept = Button.of(Elements.ACCEPT).occasional();
-        public final Do scroll = Do.press(more).serves(Goals.SIGNED_IN).first();
-        public final Do signIn = Do.press(accept).serves(Goals.SIGNED_IN);
-
-        @Override
-        public Setup setup() {
-            return Setup.named("Google services");
-        }
-    }
-
     public static final class PhonePrompt extends Screen {
         public final Mark words = Mark.of(Elements.PHONE_NUMBER);
         public final Mark noCode = Mark.of(Elements.CODE).absent();
@@ -83,7 +69,6 @@ public final class Screens {
 
     public static final Email EMAIL = new Email();
     public static final Password PASSWORD = new Password();
-    public static final Services SERVICES = new Services();
     public static final PhonePrompt PHONE_PROMPT = new PhonePrompt();
 
     private Screens() {}
