@@ -26,6 +26,7 @@ public final class Screens {
 
     public static final class Home extends Screen {
         public final Mark privateDns = Mark.of(Elements.PRIVATE_DNS);
+        public final Button searchActionBarTwoPane = Button.of(Elements.SEARCH_ACTION_BAR_TWO_PANE).free();
         @Override
         public Setup setup() {
             return Setup.named("Home").start().at(new Point(-266, -48)).shot("screens/HOME.png");

@@ -53,6 +53,7 @@ public final class Elements {
     public static final Element PRIVATE_DNS = Element.byHolding(Texts.PRIVATE_DNS).shot("elements/private_dns.png");
     public static final Element PASSWORDS_ACCOUNTS = Element.byHolding(Texts.PASSWORDS_ACCOUNTS)
             .shot("elements/passwords_accounts.png");
+    public static final Element SEARCH_ACTION_BAR_TWO_PANE = Element.byId("search_action_bar_two_pane");
 
     private Elements() {}
 }
