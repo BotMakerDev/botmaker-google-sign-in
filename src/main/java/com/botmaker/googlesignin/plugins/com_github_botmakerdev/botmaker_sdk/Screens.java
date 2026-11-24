@@ -25,7 +25,7 @@ public final class Screens {
 
     public static final class Home extends Screen {
         public final Mark privateDns = Mark.of(Elements.PRIVATE_DNS);
-        public final Button passwordsAccounts = Button.of(Elements.PASSWORDS_ACCOUNTS);
+        public final Button passwordsAccounts = Button.of(Elements.PASSWORDS_ACCOUNTS).free();
 
         @Override
         public Setup setup() {
