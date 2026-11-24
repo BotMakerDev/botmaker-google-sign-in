@@ -19,7 +19,7 @@ public final class Sdk {
 
     @SdkValue(SdkValue.Id.LAUNCH_TARGETS)
     public static List<Launcher> launchTargets() {
-        return List.of();
+        return List.of(Launcher.of("emu-app:com.android.settings@Waydroid"));
     }
 
     private Sdk() {}
