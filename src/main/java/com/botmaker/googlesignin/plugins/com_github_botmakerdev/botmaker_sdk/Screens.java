@@ -52,23 +52,6 @@ public final class Screens {
         }
     }
 
-    /** The same list under the heading Google gives it after a way that didn't suit. */
-    public static final class OtherWays extends Screen {
-        public final Mark heading = Mark.of(Elements.ANOTHER_WAY_LIST);
-        public final Button authenticator = Button.of(Elements.AUTHENTICATOR_ROW).occasional()
-                .when(Params.when(Login::authenticator).isSet());
-        public final Button phone = Button.of(Elements.PHONE_ROW).occasional();
-        public final Button code = Button.of(Elements.CODE_ROW).occasional();
-        public final Do byAuthenticator = Do.press(authenticator).serves(Goals.SIGNED_IN).first();
-        public final Do byPhone = Do.press(phone).serves(Goals.SIGNED_IN);
-        public final Do byCode = Do.press(code).serves(Goals.SIGNED_IN);
-
-        @Override
-        public Setup setup() {
-            return Setup.named("Other ways to sign in");
-        }
-    }
-
     /** A passkey is the device's owner's: another way. */
     public static final class Passkey extends Screen {
         public final Mark passkey = Mark.of(Elements.PASSKEY);
@@ -169,7 +152,6 @@ public final class Screens {
 
     public static final Email EMAIL = new Email();
     public static final Password PASSWORD = new Password();
-    public static final OtherWays OTHER_WAYS = new OtherWays();
     public static final Passkey PASSKEY = new Passkey();
     public static final PasskeyScreenLock PASSKEY_SCREEN_LOCK = new PasskeyScreenLock();
     public static final TwoStep TWO_STEP = new TwoStep();
