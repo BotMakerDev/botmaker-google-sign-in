@@ -52,17 +52,6 @@ public final class Screens {
         }
     }
 
-    /** Google's prompt sent to the account's phone: the user approves it. */
-    public static final class PhoneTap extends Screen {
-        public final Mark check = Mark.of(Elements.CHECK_YOUR_PHONE);
-        public final Mark noField = Mark.of(Elements.FIELD).absent();
-
-        @Override
-        public Setup setup() {
-            return Setup.named("Approve on the phone").needsYou(NeedsYou.PHONE);
-        }
-    }
-
     /**
      * The list of ways, under its usual heading: the one Try another way opens, or the one Google shows right after
      * the email when the account also has a passkey. The authenticator first when the login has its key, then the
@@ -204,7 +193,6 @@ public final class Screens {
 
     public static final Email EMAIL = new Email();
     public static final Password PASSWORD = new Password();
-    public static final PhoneTap PHONE_TAP = new PhoneTap();
     public static final Ways WAYS = new Ways();
     public static final OtherWays OTHER_WAYS = new OtherWays();
     public static final Passkey PASSKEY = new Passkey();
