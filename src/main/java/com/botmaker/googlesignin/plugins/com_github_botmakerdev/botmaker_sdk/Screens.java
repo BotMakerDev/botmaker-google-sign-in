@@ -23,18 +23,6 @@ import com.botmaker.sdk.api.signin.Refusal;
 @SdkValue(SdkValue.Id.SCREEN_MAP)
 public final class Screens {
 
-    public static final class Email extends Screen {
-        public final Mark forgotEmail = Mark.of(Elements.FORGOT_EMAIL_2);
-        public final Button next = Button.of(Elements.NEXT);
-
-        @Override
-        public Setup setup() {
-            return Setup.named("Email").start();
-        }
-    }
-
-    public static final Email EMAIL = new Email();
-
     private Screens() {
     }
 }
