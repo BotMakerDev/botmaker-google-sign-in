@@ -52,19 +52,6 @@ public final class Screens {
         }
     }
 
-    /** A code Google texted: the user types it in BotMaker's prompt. */
-    public static final class TextedCode extends Screen {
-        public final Mark field = Mark.of(Elements.FIELD);
-        public final Mark texted = Mark.of(Elements.TEXT_MESSAGE);
-        public final Mark notWrong = Mark.of(Elements.WRONG_CODE).absent();
-        public final Mark noPassword = Mark.of(Elements.PASSWORD).absent();
-
-        @Override
-        public Setup setup() {
-            return Setup.named("Texted code").needsYou(NeedsYou.CODE);
-        }
-    }
-
     /** A backup code's page: the login holds none, so another way. */
     public static final class BackupCode extends Screen {
         public final Mark field = Mark.of(Elements.FIELD);
@@ -231,7 +218,6 @@ public final class Screens {
 
     public static final Email EMAIL = new Email();
     public static final Password PASSWORD = new Password();
-    public static final TextedCode TEXTED_CODE = new TextedCode();
     public static final BackupCode BACKUP_CODE = new BackupCode();
     public static final PhoneTap PHONE_TAP = new PhoneTap();
     public static final Ways WAYS = new Ways();
