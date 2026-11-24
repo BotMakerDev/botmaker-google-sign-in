@@ -52,24 +52,7 @@ public final class Screens {
         }
     }
 
-    public static final class PhonePrompt extends Screen {
-        public final Mark words = Mark.of(Elements.PHONE_NUMBER);
-        public final Mark noCode = Mark.of(Elements.CODE).absent();
-        public final Mark notEmail = Mark.of(Elements.FORGOT_EMAIL).absent();
-        public final Button skip = Button.of(Elements.SKIP).occasional();
-        public final Button notNow = Button.of(Elements.NOT_NOW).occasional();
-        public final Do skipIt = Do.press(skip).serves(Goals.SIGNED_IN).first();
-        public final Do notYet = Do.press(notNow).serves(Goals.SIGNED_IN);
-
-        @Override
-        public Setup setup() {
-            return Setup.named("Add a phone number");
-        }
-    }
-
     public static final Email EMAIL = new Email();
     public static final Password PASSWORD = new Password();
-    public static final PhonePrompt PHONE_PROMPT = new PhonePrompt();
-
     private Screens() {}
 }
