@@ -52,18 +52,6 @@ public final class Screens {
         }
     }
 
-    /** Android's sheet offering a screen lock for passkeys, over the sign-in: closed by a tap above it, never set up. */
-    public static final class PasskeyScreenLock extends Screen {
-        public final Mark words = Mark.of(Elements.PASSKEY_SCREEN_LOCK);
-        public final Button close = Button.of(Elements.ABOVE_SHEET).occasional();
-        public final Do signIn = Do.press(close).serves(Goals.SIGNED_IN);
-
-        @Override
-        public Setup setup() {
-            return Setup.named("Screen lock for passkeys");
-        }
-    }
-
     /** A second step the bot doesn't read, under any heading, offering another way. */
     public static final class TwoStep extends Screen {
         public final Button anotherWay = Button.of(Elements.TRY_ANOTHER_WAY).marking();
@@ -139,7 +127,6 @@ public final class Screens {
 
     public static final Email EMAIL = new Email();
     public static final Password PASSWORD = new Password();
-    public static final PasskeyScreenLock PASSKEY_SCREEN_LOCK = new PasskeyScreenLock();
     public static final TwoStep TWO_STEP = new TwoStep();
     public static final Captcha CAPTCHA = new Captcha();
     public static final Refused REFUSED = new Refused();
