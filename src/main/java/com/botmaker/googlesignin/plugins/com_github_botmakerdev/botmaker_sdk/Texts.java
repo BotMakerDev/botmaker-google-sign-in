@@ -39,6 +39,7 @@ public final class Texts {
     public static final Words AUTHENTICATOR = Words.of("google authenticator");
     public static final Words VERIFICATION_CODE = Words.of("verification code");
     public static final Words FORGOT_EMAIL_2 = Words.of("Forgot email?");
+    public static final Words NEXT = Words.of("Next");
 
     private Texts() {}
 }

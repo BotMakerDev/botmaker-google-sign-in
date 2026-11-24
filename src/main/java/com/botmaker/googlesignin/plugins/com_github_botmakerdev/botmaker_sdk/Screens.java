@@ -25,6 +25,7 @@ public final class Screens {
 
     public static final class Email extends Screen {
         public final Mark forgotEmail = Mark.of(Elements.FORGOT_EMAIL_2);
+        public final Button next = Button.of(Elements.NEXT);
 
         @Override
         public Setup setup() {
