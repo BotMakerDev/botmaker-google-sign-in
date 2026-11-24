@@ -52,20 +52,6 @@ public final class Screens {
         }
     }
 
-    /** A backup code's page: the login holds none, so another way. */
-    public static final class BackupCode extends Screen {
-        public final Mark field = Mark.of(Elements.FIELD);
-        public final Mark backup = Mark.of(Elements.BACKUP_CODES);
-        public final Mark noPassword = Mark.of(Elements.PASSWORD).absent();
-        public final Button anotherWay = Button.of(Elements.TRY_ANOTHER_WAY).occasional();
-        public final Do away = Do.press(anotherWay).serves(Goals.SIGNED_IN);
-
-        @Override
-        public Setup setup() {
-            return Setup.named("Backup code");
-        }
-    }
-
     /** Google's prompt sent to the account's phone: the user approves it. */
     public static final class PhoneTap extends Screen {
         public final Mark check = Mark.of(Elements.CHECK_YOUR_PHONE);
@@ -218,7 +204,6 @@ public final class Screens {
 
     public static final Email EMAIL = new Email();
     public static final Password PASSWORD = new Password();
-    public static final BackupCode BACKUP_CODE = new BackupCode();
     public static final PhoneTap PHONE_TAP = new PhoneTap();
     public static final Ways WAYS = new Ways();
     public static final OtherWays OTHER_WAYS = new OtherWays();
