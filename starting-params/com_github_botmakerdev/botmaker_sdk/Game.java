@@ -5,6 +5,7 @@ import com.botmaker.sdk.api.bot.LaunchChoice;
 import com.botmaker.sdk.api.bot.SdkValue;
 import com.botmaker.sdk.api.capture.CaptureSource;
 import java.time.ZoneId;
+import com.botmaker.sdk.api.capture.Instance;
 
 /**
  * Parameters of com.github.BotMakerDev:botmaker-sdk for this bot, each one method, whole: its name, its type and,
@@ -29,5 +30,11 @@ public class Game {
     @Param.Shown(description = "The game server's time zone, that its daily reset is read in")
     public ZoneId gameZone() {
         return ZoneId.of("Europe/Warsaw");
+    }
+
+    @SdkValue(SdkValue.Id.INSTANCE)
+    @Param.Shown(description = "The emulator instance this run plays on")
+    public Instance instance() {
+        return Instance.named("");
     }
 }
