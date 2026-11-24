@@ -52,30 +52,6 @@ public final class Screens {
         }
     }
 
-    /**
-     * An authenticator's code: typed by BotMaker from the account's key when it has one; else another way, which
-     * leads to the phone's prompt.
-     */
-    public static final class Code extends Screen {
-        public final Mark field = Mark.of(Elements.FIELD);
-        public final Mark code = Mark.of(Elements.CODE);
-        public final Mark notEmail = Mark.of(Elements.FORGOT_EMAIL).absent();
-        public final Mark notBackup = Mark.of(Elements.BACKUP_CODES).absent();
-        public final Mark notTexted = Mark.of(Elements.TEXT_MESSAGE).absent();
-        public final Mark notWrong = Mark.of(Elements.WRONG_CODE).absent();
-        public final Mark noPassword = Mark.of(Elements.PASSWORD).absent();
-        public final Button authenticator = Button.of(Elements.FIELD).typesSecret(Login::authenticator).clearing()
-                .submitting();
-        public final Button anotherWay = Button.of(Elements.TRY_ANOTHER_WAY).occasional();
-        public final Do signIn = Do.press(authenticator).serves(Goals.SIGNED_IN).first();
-        public final Do away = Do.press(anotherWay).serves(Goals.SIGNED_IN).last();
-
-        @Override
-        public Setup setup() {
-            return Setup.named("Code");
-        }
-    }
-
     /** A code Google texted: the user types it in BotMaker's prompt. */
     public static final class TextedCode extends Screen {
         public final Mark field = Mark.of(Elements.FIELD);
@@ -255,7 +231,6 @@ public final class Screens {
 
     public static final Email EMAIL = new Email();
     public static final Password PASSWORD = new Password();
-    public static final Code CODE = new Code();
     public static final TextedCode TEXTED_CODE = new TextedCode();
     public static final BackupCode BACKUP_CODE = new BackupCode();
     public static final PhoneTap PHONE_TAP = new PhoneTap();
