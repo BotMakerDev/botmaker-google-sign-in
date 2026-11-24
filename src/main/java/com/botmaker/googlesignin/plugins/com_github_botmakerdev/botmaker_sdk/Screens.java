@@ -34,7 +34,7 @@ public final class Screens {
 
         @Override
         public Setup setup() {
-            return Setup.named("Email").start();
+            return Setup.named("Email").start().shot("screens/EMAIL.png");
         }
     }
 
